@@ -1,6 +1,6 @@
 cask "buckets-beta" do
-  version "0.65.0"
-  sha256 "e549500f814481a6489efccbc4fdef3ec7fc211f9c98f5b76362574b567de4e8"
+  version "0.68.0"
+  sha256 "5bb1de679343c87de957e9f11a13a651b6ba91adeff2737a5dadb7a3dce8a52b"
 
   url "https://github.com/buckets/desktop-beta/releases/download/v#{version}/Buckets-Beta-#{version}.dmg",
       verified: "github.com/buckets/desktop-beta/"

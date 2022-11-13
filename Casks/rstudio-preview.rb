@@ -1,6 +1,6 @@
 cask "rstudio-preview" do
-  version "2022.02.0,443"
-  sha256 "391d5f188fe2ebc0dc67ee35b3d3c389e3772b5b95c1fdcfb6b983b94038298d"
+  version "2022.07.2,576"
+  sha256 "35028d02d3f51d4599998c6d95816277acfce0dc63f80e09c3374218b83898de"
 
   url "https://s3.amazonaws.com/rstudio-ide-build/desktop/macos/RStudio-#{version.csv.first}-#{version.csv.second}.dmg",
       verified: "s3.amazonaws.com/rstudio-ide-build/"
@@ -10,11 +10,9 @@ cask "rstudio-preview" do
 
   livecheck do
     url :homepage
-    strategy :page_match do |page|
-      match = page.match(/RStudio-(\d{4}\.\d{2}\.\d+)-(\d+)\.dmg/i)
-      next if match.blank?
-
-      "#{match[1]},#{match[2]}"
+    regex(/RStudio[._-](\d{4}\.\d{2}\.\d+)[._-](\d+)\.dmg/i)
+    strategy :page_match do |page, regex|
+      page.scan(regex).map { |match| "#{match[0]},#{match[1]}" }
     end
   end
 

@@ -1,13 +1,9 @@
 cask "corretto8" do
-  arch = Hardware::CPU.intel? ? "x64" : "aarch64"
+  arch arm: "aarch64", intel: "x64"
 
-  if Hardware::CPU.intel?
-    version "8.322.06.1"
-    sha256 "c20d7454fc0b461d3d354b6d4eed2665fa056d74ef438ef51c26f140203b4386"
-  else
-    version "8.322.06.4"
-    sha256 "bbca6e00d81070f7c633fbede651ae6bfa71cbc563d250ee2e0c439e69a3e193"
-  end
+  version "8.352.08.1"
+  sha256 arm:   "dfa1616331a3e764c70fc46251745b6a2a77a005443ec605ccf547f40caa7cc6",
+         intel: "1b105f3f528d8684b7db8765596b8e3e0b10e8d67d806b48ab90df14f22d4de0"
 
   url "https://corretto.aws/downloads/resources/#{version}/amazon-corretto-#{version}-macosx-#{arch}.pkg"
   name "Amazon Corretto JDK"
@@ -16,9 +12,8 @@ cask "corretto8" do
 
   livecheck do
     url "https://corretto.aws/downloads/latest/amazon-corretto-#{version.major}-#{arch}-macos-jdk.pkg"
-    strategy :header_match do |headers|
-      headers["location"][%r{/amazon-corretto-(\d+(?:\.\d+)+)-macosx-#{arch}\.pkg}i, 1]
-    end
+    regex(%r{/amazon-corretto-(\d+(?:\.\d+)+)-macosx-#{arch}\.pkg}i)
+    strategy :header_match
   end
 
   pkg "amazon-corretto-#{version}-macosx-#{arch}.pkg"

@@ -1,38 +1,24 @@
 cask "vmware-fusion-tech-preview" do
-  arch = Hardware::CPU.intel? ? "" : "_arm64"
+  version "20486664"
+  sha256 "8c74005d88edb0e37d2ac3517f4e72ce85613abb2dfaaea78fe3db8d2c7b17fd"
 
-  if Hardware::CPU.intel?
-    version "16530630"
-    sha256 "663b3d35f23541003f34ee0f5160bd04d0113703ac0a34a509b964b21a5bd5d0"
-
-    livecheck do
-      url "http://www.vmware.com/go/get-fusion-tp"
-      strategy :header_match
-    end
-  else
-    version "18656771"
-    sha256 "c8511bbb829d60f95f94599392bef8058b36cd94f103fb264a57cacdc5f55325"
-
-    livecheck do
-      skip "No version information available"
-    end
-  end
-
-  url "https://download3.vmware.com/software/fusion/file/VMware-Fusion-e.x.p-#{version}#{arch}.dmg"
+  url "https://download3.vmware.com/software/FUS-PUBTP-22H2/VMware-Fusion-e.x.p-#{version}_universal.dmg"
   name "VMware Fusion Tech Preview"
   desc "Create, manage, and run virtual machines"
   homepage "https://blogs.vmware.com/teamfusion/tech-preview"
+
+  livecheck do
+    url "https://customerconnect.vmware.com/channel/public/api/v1.0/dlg/beta/header?locale=en_US&downloadGroup=FUS-PUBTP-22H2"
+    strategy :page_match do |page|
+      JSON.parse(page)["buildNumber"]
+    end
+  end
 
   auto_updates true
   conflicts_with cask: "vmware-fusion"
   depends_on macos: ">= :catalina"
 
   app "VMware Fusion Tech Preview.app"
-  if Hardware::CPU.intel?
-    binary "#{appdir}/VMware Fusion Tech Preview.app/Contents/Library/vkd/bin/vctl"
-    binary "#{appdir}/VMware Fusion Tech Preview.app/Contents/Library/vmrest"
-    binary "#{appdir}/VMware Fusion Tech Preview.app/Contents/Library/VMware OVF Tool/ovftool"
-  end
   binary "#{appdir}/VMware Fusion Tech Preview.app/Contents/Library/vmnet-bridge"
   binary "#{appdir}/VMware Fusion Tech Preview.app/Contents/Library/vmnet-cfgcli"
   binary "#{appdir}/VMware Fusion Tech Preview.app/Contents/Library/vmnet-cli"
@@ -56,6 +42,12 @@ cask "vmware-fusion-tech-preview" do
   binary "#{appdir}/VMware Fusion Tech Preview.app/Contents/Library/vmware-vmx"
   binary "#{appdir}/VMware Fusion Tech Preview.app/Contents/Library/vmware-vmx-debug"
   binary "#{appdir}/VMware Fusion Tech Preview.app/Contents/Library/vmware-vmx-stats"
+
+  on_intel do
+    binary "#{appdir}/VMware Fusion Tech Preview.app/Contents/Library/vkd/bin/vctl"
+    binary "#{appdir}/VMware Fusion Tech Preview.app/Contents/Library/vmrest"
+    binary "#{appdir}/VMware Fusion Tech Preview.app/Contents/Library/VMware OVF Tool/ovftool"
+  end
 
   postflight do
     system_command "#{appdir}/VMware Fusion Tech Preview.app/Contents/Library/Initialize VMware Fusion.tool",

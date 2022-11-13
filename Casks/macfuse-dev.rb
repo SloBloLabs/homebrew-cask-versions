@@ -1,12 +1,17 @@
 cask "macfuse-dev" do
-  version "4.2.4"
-  sha256 "82a2c30b3a7bf56aa2755c0c192fb50d9eecc3fe42505ab4e8679b50306188bd"
+  version "4.4.1"
+  sha256 "2a2d0f37ec5fcff547c5efa7d08539103a0b46bc16080c2b41a7e749f6e65c61"
 
   url "https://github.com/osxfuse/osxfuse/releases/download/macfuse-#{version}/macfuse-#{version}.dmg",
       verified: "github.com/osxfuse/osxfuse/"
   name "macFUSE"
   desc "File system integration"
   homepage "https://osxfuse.github.io/"
+
+  livecheck do
+    url "https://osxfuse.github.io/releases/DeveloperRelease.plist"
+    regex(/macfuse[._-]v?(\d+(?:\.\d+)+)\.dmg/i)
+  end
 
   conflicts_with cask: "macfuse"
 

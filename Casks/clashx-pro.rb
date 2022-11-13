@@ -1,6 +1,6 @@
 cask "clashx-pro" do
-  version "1.90.1.1"
-  sha256 "3ddc710ca6da0d7b93eedd50bcf5538944fd9d70466f757063f7a800234182e7"
+  version "1.95.1.1"
+  sha256 "e8ce806308a4e7c3e82a39169972ed0822063b652404e3bc7a8adc16957921e2"
 
   url "https://appcenter.vercel.app/clashx/clashx-pro/#{version}",
       verified: "appcenter.vercel.app/clashx"
@@ -19,9 +19,9 @@ cask "clashx-pro" do
   app "ClashX Pro.app"
 
   uninstall delete:    [
-    "/Library/LaunchDaemons/com.west2online.ClashXPro.ProxyConfigHelper.plist",
-    "/Library/PrivilegedHelperTools/com.west2online.ClashXPro.ProxyConfigHelper",
-  ],
+              "/Library/LaunchDaemons/com.west2online.ClashXPro.ProxyConfigHelper.plist",
+              "/Library/PrivilegedHelperTools/com.west2online.ClashXPro.ProxyConfigHelper",
+            ],
             launchctl: "com.west2online.ClashXPro.ProxyConfigHelper",
             quit:      "com.west2online.ClashXPro"
 

@@ -1,30 +1,37 @@
 cask "blender-lts" do
-  arch = Hardware::CPU.intel? ? "x64" : "arm64"
+  arch arm: "arm64", intel: "x64"
 
-  version "2.93.8"
-
-  if Hardware::CPU.intel?
-    sha256 "221ca9d756f6494e94967c925e014f250d141ada34eb40276e82165f0eea5f1f"
-  else
-    sha256 "c2e9419585865c42401ca456d27f51c7f4f5d0b9f3fe565d0a5faded8f3e6e40"
-  end
+  version "3.3.1"
+  sha256 arm:   "e4a19540ad98222ebb23115fb1fdac04ba04501f4d8aa3d8b82c61d8757e1cd6",
+         intel: "6af68af6d43ac184ff0899d0ced2fc29006984fffee6a805825d7e67c48ee23f"
 
   url "https://download.blender.org/release/Blender#{version.major_minor}/blender-#{version}-macos-#{arch}.dmg"
   name "Blender"
   desc "Free and open-source 3D creation suite"
   homepage "https://www.blender.org/"
 
+  # NOTE: The download page contents may change once the newest version is no
+  # longer an LTS version (i.e. 3.4 instead of 3.3 LTS) requiring further
+  # changes to this setup.
   livecheck do
-    url "https://www.blender.org/download/lts/"
+    url "https://www.blender.org/download/"
     regex(%r{href=.*?/blender[._-]v?(\d+(?:\.\d+)+)-macOS-#{arch}\.dmg}i)
     strategy :page_match do |page, regex|
-      minor_version = page[%r{href=["'].*/download/lts/(\d+(?:[.-]\d+)+)/["' >]}i, 1]
-      next [] if minor_version.blank?
+      # Match major/minor versions from LTS "download" page URLs
+      lts_page = Homebrew::Livecheck::Strategy.page_content("https://www.blender.org/download/lts/")
+      next if lts_page[:content].blank?
 
-      version_page = Homebrew::Livecheck::Strategy.page_content("https://www.blender.org/download/lts/#{minor_version}/")
-      next [] if version_page[:content].blank?
+      lts_versions =
+        lts_page[:content].scan(%r{href=["'].*/download/lts/(\d+(?:[.-]\d+)+)/["' >]}i)
+                          .flatten
+                          .uniq
+                          .map { |v| Version.new(v) }
+      next if lts_versions.blank?
 
-      version_page[:content].scan(regex).flatten
+      # Ensure we only match LTS versions on the download page
+      page.scan(regex)
+          .flatten
+          .select { |v| lts_versions.include?(Version.new(v).major_minor) }
     end
   end
 

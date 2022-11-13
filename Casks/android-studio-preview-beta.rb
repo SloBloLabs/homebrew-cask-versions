@@ -1,13 +1,9 @@
 cask "android-studio-preview-beta" do
-  arch = Hardware::CPU.intel? ? "mac" : "mac_arm"
+  arch arm: "mac_arm", intel: "mac"
 
-  version "2021.2.1.11"
-
-  if Hardware::CPU.intel?
-    sha256 "94ca362a616a876049827e3704ea6bcbb3ca15fed201554e0f7eaac276508bb5"
-  else
-    sha256 "688df52460c9f03c4e56443760dc0fab0e8b98567596e8dbfd94fd9b5a0a1d6f"
-  end
+  version "2022.1.1.15"
+  sha256 arm:   "9a18a57c3bcc00771ed4483b4069d2c007148a8be8d42bb8b3b2f8d63ddfd742",
+         intel: "09f690d7058911318e38ecde521dcfaccf008522cafa50ea88f0d4ad6b977391"
 
   url "https://dl.google.com/dl/android/studio/ide-zips/#{version}/android-studio-#{version}-#{arch}.zip",
       verified: "dl.google.com/dl/android/studio/"
@@ -25,15 +21,15 @@ cask "android-studio-preview-beta" do
   app "Android Studio Preview.app"
 
   zap trash: [
-    "~/.android",
-    "~/Library/Android/sdk",
-    "~/Library/Application Support/Google/AndroidStudioPreview#{version.major_minor}",
-    "~/Library/Caches/Google/AndroidStudioPreview#{version.major_minor}",
-    "~/Library/Logs/Google/AndroidStudioPreview#{version.major_minor}",
-    "~/Library/Preferences/com.android.Emulator.plist",
-    "~/Library/Preferences/com.google.android.studio-EAP.plist",
-    "~/Library/Saved Application State/com.google.android.studio-EAP.savedState",
-  ],
+        "~/.android",
+        "~/Library/Android/sdk",
+        "~/Library/Application Support/Google/AndroidStudioPreview#{version.major_minor}",
+        "~/Library/Caches/Google/AndroidStudioPreview#{version.major_minor}",
+        "~/Library/Logs/Google/AndroidStudioPreview#{version.major_minor}",
+        "~/Library/Preferences/com.android.Emulator.plist",
+        "~/Library/Preferences/com.google.android.studio-EAP.plist",
+        "~/Library/Saved Application State/com.google.android.studio-EAP.savedState",
+      ],
       rmdir: [
         "~/AndroidStudioProjects",
         "~/Library/Android",

@@ -1,14 +1,10 @@
 cask "github-beta" do
-  arch = Hardware::CPU.intel? ? "x64" : "arm64"
-  platform = Hardware::CPU.intel? ? "darwin" : "darwin-arm64"
+  arch arm: "arm64", intel: "x64"
+  platform = on_arch_conditional arm: "darwin-arm64", intel: "darwin"
 
-  version "2.9.12-beta2-bedf9bac"
-
-  if Hardware::CPU.intel?
-    sha256 "73fca2be33cb5c6c85f3437a4e88e0d872b914daedbb815101d4d51b00b53dd0"
-  else
-    sha256 "aa98a8def603d6fb2c60e29ee361b691dcbd1badb636f8f55ad4e3672e121f99"
-  end
+  version "3.1.3-beta2-ab44201b"
+  sha256 arm:   "69388a201a00d5868c950f0a7bc79c564f7c97149c4fb2e5cbcb3641a10d7c19",
+         intel: "daac483de6ff1f4aab5ce3f3279eaad59d1867fae941a49b9a1f3635b2e511b8"
 
   url "https://desktop.githubusercontent.com/github-desktop/releases/#{version}/GitHubDesktop-#{arch}.zip",
       verified: "desktop.githubusercontent.com/github-desktop/"
@@ -29,18 +25,18 @@ cask "github-beta" do
   binary "#{appdir}/GitHub Desktop.app/Contents/Resources/app/static/github.sh", target: "github"
 
   zap trash: [
-    "~/Library/Application Support/com.apple.sharedfilelist/com.apple.LSSharedFileList.ApplicationRecentDocuments/com.github.GitHubClient.sfl*",
-    "~/Library/Application Support/com.github.GitHubClient",
-    "~/Library/Application Support/com.github.GitHubClient.ShipIt",
-    "~/Library/Application Support/GitHub Desktop",
-    "~/Library/Application Support/ShipIt_stderr.log",
-    "~/Library/Application Support/ShipIt_stdout.log",
-    "~/Library/Caches/com.github.GitHubClient",
-    "~/Library/Caches/com.github.GitHubClient.ShipIt",
-    "~/Library/Logs/GitHub Desktop",
-    "~/Library/Preferences/ByHost/com.github.GitHubClient.ShipIt.*.plist",
-    "~/Library/Preferences/com.github.GitHubClient.helper.plist",
-    "~/Library/Preferences/com.github.GitHubClient.plist",
-  ],
+        "~/Library/Application Support/com.apple.sharedfilelist/com.apple.LSSharedFileList.ApplicationRecentDocuments/com.github.GitHubClient.sfl*",
+        "~/Library/Application Support/com.github.GitHubClient",
+        "~/Library/Application Support/com.github.GitHubClient.ShipIt",
+        "~/Library/Application Support/GitHub Desktop",
+        "~/Library/Application Support/ShipIt_stderr.log",
+        "~/Library/Application Support/ShipIt_stdout.log",
+        "~/Library/Caches/com.github.GitHubClient",
+        "~/Library/Caches/com.github.GitHubClient.ShipIt",
+        "~/Library/Logs/GitHub Desktop",
+        "~/Library/Preferences/ByHost/com.github.GitHubClient.ShipIt.*.plist",
+        "~/Library/Preferences/com.github.GitHubClient.helper.plist",
+        "~/Library/Preferences/com.github.GitHubClient.plist",
+      ],
       rmdir: "~/.config/git"
 end

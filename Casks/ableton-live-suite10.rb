@@ -1,9 +1,8 @@
 cask "ableton-live-suite10" do
-  version "10.1.42"
-  sha256 "2143722cfd1e7ef17742802baed7e398da2d8851eb855cafa993c688b76b0bd8"
+  version "10.1.43"
+  sha256 "8bb8e4b9a4f1f3daa1129dbdf8add879d4e8d575ba95e923ed6dcba368f48717"
 
   url "https://cdn-downloads.ableton.com/channels/#{version}/ableton_live_suite_#{version}_64.dmg"
-  appcast "https://www.ableton.com/en/release-notes/live-#{version.major}/"
   name "Ableton Live Suite"
   desc "Sound and music editor"
   homepage "https://www.ableton.com/en/live/"
@@ -30,4 +29,8 @@ cask "ableton-live-suite10" do
     "~/Documents/Max [0-9]",
     "/Users/Shared/Max [0-9]",
   ]
+
+  caveats do
+    discontinued
+  end
 end

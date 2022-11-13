@@ -1,6 +1,6 @@
 cask "xampp7" do
-  version "7.4.27-2"
-  sha256 "9afea77fd9b531310bceb244525e507296513e4f8a5c21c4cff177ce545dc4a9"
+  version "7.4.29-1"
+  sha256 "c21aa7631a6ed075a1aae991c11188238cf7c9bca6e19c2cd4fe41884651686b"
 
   url "https://downloadsapachefriends.global.ssl.fastly.net/xampp-files/#{version.split("-").first}/xampp-osx-#{version}-installer.dmg",
       verified: "downloadsapachefriends.global.ssl.fastly.net/xampp-files/"
@@ -16,7 +16,7 @@ cask "xampp7" do
   conflicts_with cask: "xampp"
 
   installer script: {
-    executable: "XAMPP.app/Contents/MacOS/osx-x86_64",
+    executable: "xampp-osx-#{version}-installer.app/Contents/MacOS/osx-x86_64",
     args:       ["--mode", "unattended"],
     sudo:       true,
   }

@@ -1,6 +1,6 @@
 cask "citra-nightly" do
-  version "1757,20220305-ac98458"
-  sha256 "cf978b2393b55721f2f53b22e36a7fbe903c3fbd60322ce3bfa05186c42dcc74"
+  version "1781,20220823-141471e"
+  sha256 "2bc3fa2746bf714d377540522db420a0fcc681f5ad3b49daa3e0d2dac5ebc781"
 
   url "https://github.com/citra-emu/citra-nightly/releases/download/nightly-#{version.csv.first}/citra-osx-#{version.csv.second}.tar.gz",
       verified: "github.com/citra-emu/citra-nightly/"
@@ -10,11 +10,9 @@ cask "citra-nightly" do
 
   livecheck do
     url :url
-    strategy :github_latest do |page|
-      match = page.match(%r{href=.*?/nightly[._-](\d+)/citra[._-]osx[._-](\d+[._-]\h+)\.tar\.gz}i)
-      next if match.blank?
-
-      "#{match[1]},#{match[2]}"
+    regex(%r{href=.*?/nightly[._-](\d+)/citra[._-]osx[._-](\d+[._-]\h+)\.t}i)
+    strategy :github_latest do |page, regex|
+      page.scan(regex).map { |match| "#{match[0]},#{match[1]}" }
     end
   end
 

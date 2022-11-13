@@ -1,19 +1,21 @@
 cask "lando-edge" do
-  arch = Hardware::CPU.intel? ? "x64" : "arm64"
+  arch arm: "arm64", intel: "x64"
 
-  version "3.6.2"
-
-  if Hardware::CPU.intel?
-    sha256 "a32692e8b25365b40ad125114df8eaa10ef3ed171f251a1cd3fedc8117175d76"
-  else
-    sha256 "514d244ec465ed552c1d05a153695dc232e264a3d3f6394392b5deeaae7bf803"
-  end
+  version "3.6.5"
+  sha256 arm:   "4e1789b78690ea0b430ee73460c747b9c234554fc108a581e1802f02eec87af6",
+         intel: "31efde4bc474ab63f2eb418fc0891704f31f1f16f0a3023440aada06f5229221"
 
   url "https://github.com/lando/lando/releases/download/v#{version}/lando-#{arch}-v#{version}.dmg",
       verified: "github.com/lando/lando/"
   name "Lando Edge"
   desc "Local development environment and DevOps tool built on Docker"
   homepage "https://docs.lando.dev/"
+
+  livecheck do
+    url "https://github.com/lando/lando/releases?q=prerelease%3Atrue&expanded=true"
+    regex(%r{href=["']?[^"' >]*?/tag/\D*?(\d+(?:\.\d+)+)[^"' >]*?["' >]}i)
+    strategy :page_match
+  end
 
   conflicts_with cask: "lando"
   depends_on cask: "docker"

@@ -1,16 +1,20 @@
 cask "local-beta" do
-  version "6.3.1,5803"
-  sha256 "eabbcc60b15a8d07846719b346c480d543579b3095f0619a06dc58d48fe2e993"
+  arch arm: "mac-arm64", intel: "mac"
 
-  url "https://cdn.localwp.com/releases-beta/#{version.csv.first}+local-beta-#{version.csv.second}/local-beta-#{version.csv.first}-b#{version.csv.second}-mac.dmg"
+  version "6.5.1,6187"
+  sha256  arm:   "a39f57c6070fe7103e9109c8b020be1886c48b068c28f0d54eee8cab4ea28257",
+          intel: "8cf6a3293b4749ac73edcbad6b404912cf7519d92538bf68b4890b01fc91d6f0"
+
+  url "https://cdn.localwp.com/releases-beta/#{version.csv.first}+local-beta-#{version.csv.second}/local-beta-#{version.csv.first}-b#{version.csv.second}-#{arch}.dmg"
   name "Local Beta"
   desc "WordPress local development tool by Flywheel (beta)"
   homepage "https://localwp.com/"
 
   livecheck do
-    url "https://cdn.localwp.com/beta/latest/mac"
-    strategy :header_match do |headers|
-      match = headers["location"].match(%r{/(\d+(?:\.\d+)+)\+local-beta-(\d+)/})
+    url "https://cdn.localwp.com/beta/latest/#{arch}"
+    regex(%r{/(\d+(?:\.\d+)+)\+local-beta-(\d+)/}i)
+    strategy :header_match do |headers, regex|
+      match = headers["location"]&.match(regex)
       next if match.blank?
 
       "#{match[1]},#{match[2]}"

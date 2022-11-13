@@ -1,6 +1,6 @@
 cask "netnewswire-beta" do
-  version "6.1b4"
-  sha256 "2238b1dc93730e7b418b76717dad53ac7f12cf5fcf337ecef8f58ec42d4a10d8"
+  version "6.1.1b1"
+  sha256 "0a2197125328e5225d6df293b0428e322fd443b7d5ffb9cec008d801e2107206"
 
   url "https://github.com/brentsimmons/NetNewsWire/releases/download/mac-#{version}/NetNewsWire#{version}.zip",
       verified: "github.com/brentsimmons/NetNewsWire/"
@@ -10,7 +10,6 @@ cask "netnewswire-beta" do
 
   livecheck do
     url :url
-    strategy :git
     regex(/^mac-(\d+(?:\.\d+)*b\d+)$/i)
   end
 

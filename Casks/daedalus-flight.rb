@@ -1,6 +1,6 @@
 cask "daedalus-flight" do
-  version "4.9.0-FC1,20867"
-  sha256 "5b54a19cd50be7459d2f7775e7a997ea2df814fedff6a17610b3185a405a4a08"
+  version "4.11.0,21857"
+  sha256 "37a956cee16bede4442754879071d07f400ae8c726a942c68261f88d0117eabe"
 
   url "https://update-cardano-mainnet-flight.iohk.io/daedalus-#{version.csv.first}-mainnet_flight-#{version.csv.second}.pkg",
       verified: "update-cardano-mainnet-flight.iohk.io/"
@@ -10,11 +10,9 @@ cask "daedalus-flight" do
 
   livecheck do
     url "https://update-cardano-mainnet-flight.iohk.io/daedalus-latest-version.json"
-    strategy :page_match do |page|
-      match = page.match(%r{/daedalus-(\d+(?:\.\d+)*(?:-FC\d*)?)-mainnet_flight-(\d+)\.pkg}i)
-      next if match.blank?
-
-      "#{match[1]},#{match[2]}"
+    regex(%r{/daedalus-(\d+(?:\.\d+)*(?:-FC\d*)?)-mainnet_flight-(\d+)\.pkg}i)
+    strategy :page_match do |page, regex|
+      page.scan(regex).map { |match| "#{match[0]},#{match[1]}" }
     end
   end
 

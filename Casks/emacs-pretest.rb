@@ -1,6 +1,6 @@
 cask "emacs-pretest" do
-  version "28.0.92"
-  sha256 "94e3635501896b0c65678dcc01560d456148649b3d472af5f07568cc7dc5b1d6"
+  version "28.1.91"
+  sha256 "917b7c0d0e7fca0d2000457c97bd180e2aa00fbab832238c4b58a72bc2c4628c"
 
   url "https://emacsformacosx.com/emacs-builds/Emacs-pretest-#{version}-universal.dmg"
   name "Emacs"
@@ -13,9 +13,9 @@ cask "emacs-pretest" do
   end
 
   conflicts_with cask:    [
-    "emacs",
-    "emacs-nightly",
-  ],
+                   "emacs",
+                   "emacs-nightly",
+                 ],
                  formula: "emacs"
 
   app "Emacs.app"

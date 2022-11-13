@@ -1,13 +1,10 @@
 cask "libreoffice-still" do
-  arch, folder = Hardware::CPU.intel? ? ["x86-64", "x86_64"] : ["aarch64", "aarch64"]
+  arch arm: "aarch64", intel: "x86-64"
+  folder = on_arch_conditional arm: "aarch64", intel: "x86_64"
 
-  version "7.2.6"
-
-  if Hardware::CPU.intel?
-    sha256 "4453450f0aa29a6b2fe2fef2218a5e8b0113eacc75800dc1e4ebe4b629f71e39"
-  else
-    sha256 "fcaf45650363a326ff42c65efe390a488652db0825963cb07d2206683d3cabaf"
-  end
+  version "7.3.7"
+  sha256 arm:   "fe0101a4f55acda4d9097f8d1c9d1a89dc569e92d641bff9819aea5ec8cf54cf",
+         intel: "a239af496b737655032196d0029d57e7bfdf0bddafa73af596bbfba590fec18a"
 
   url "https://download.documentfoundation.org/libreoffice/stable/#{version}/mac/#{folder}/LibreOffice_#{version}_MacOS_#{arch}.dmg",
       verified: "download.documentfoundation.org/libreoffice/stable/"
@@ -17,16 +14,11 @@ cask "libreoffice-still" do
 
   livecheck do
     url "https://www.libreoffice.org/download/release-notes/"
-    strategy :page_match do |page|
-      match = page.match(
-        /LibreOffice\s*(\d+(?:\.\d+)+)\s*\((\d+(?:-\d+)*)\)\s*-\s*Still\s*Branch/i,
-      )
-      (match[1]).to_s
-    end
+    regex(/LibreOffice\s+v?(\d+(?:\.\d+)+)(?:\s+\((?:\d+(?:-\d+)+)\))?\s*-\s*Still\s+Branch/i)
   end
 
   conflicts_with cask: "libreoffice"
-  depends_on macos: ">= :yosemite"
+  depends_on macos: ">= :sierra"
 
   app "LibreOffice.app"
   binary "#{appdir}/LibreOffice.app/Contents/MacOS/gengal"

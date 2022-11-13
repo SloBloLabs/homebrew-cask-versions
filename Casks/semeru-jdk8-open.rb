@@ -1,6 +1,6 @@
 cask "semeru-jdk8-open" do
-  version "8u322-b06,openj9-0.30.0"
-  sha256 "55f8dfffc0a3f0a971debe652ffc2e9b227a805e25f08316c5981ae18b17286b"
+  version "8u352-b08,openj9-0.35.0"
+  sha256 "ca50da76abbd87acd6cda097f8e697f446c5781134f493c0193c22e8173621cc"
 
   url "https://github.com/ibmruntimes/semeru8-binaries/releases/download/jdk#{version.csv.first}_#{version.csv.second}/ibm-semeru-open-jdk_x64_mac_#{version.csv.first.tr("-", "")}_#{version.csv.second}.pkg",
       verified: "github.com/ibmruntimes/semeru8-binaries/"
@@ -10,11 +10,9 @@ cask "semeru-jdk8-open" do
 
   livecheck do
     url "https://github.com/ibmruntimes/semeru8-binaries/releases"
-    strategy :github_latest do |page|
-      match = page.match(%r{href=.*?/tag/jdk(\d+u\d+)[._-](b\d+)[._-]([^&]+)&quot;}i)
-      next if match.blank?
-
-      "#{match[1]}-#{match[2]},#{match[3]}"
+    regex(%r{href=.*?/tag/jdk(\d+u\d+)[._-](b\d+)[._-]([^&]+)&quot;}i)
+    strategy :github_latest do |page, regex|
+      page.scan(regex).map { |match| "#{match[0]}-#{match[1]},#{match[2]}" }
     end
   end
 

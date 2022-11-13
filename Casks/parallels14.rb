@@ -9,11 +9,9 @@ cask "parallels14" do
 
   livecheck do
     url "https://kb.parallels.com/en/124521"
-    strategy :page_match do |page|
-      match = page.match(/Parallels Desktop #{version.major} for Mac\s*(\d+(?:\.\d+)+)\s*\((\d+)\)/i)
-      next if match.blank?
-
-      "#{match[1]}-#{match[2]}"
+    regex(/(v?\d+(?:\.\d+)+\s*\(\d+\)|\(v?\d+(?:\.\d+)+-\d+\))/i)
+    strategy :page_match do |page, regex|
+      page.scan(regex).map { |match| match.first.strip.tr("()", "").gsub(/\s+/, "-") }
     end
   end
 
@@ -24,6 +22,7 @@ cask "parallels14" do
     "homebrew/cask-versions/parallels13",
     "homebrew/cask-versions/parallels15",
     "homebrew/cask-versions/parallels16",
+    "homebrew/cask-versions/parallels17",
   ]
   depends_on macos: [
     :el_capitan,

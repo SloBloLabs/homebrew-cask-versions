@@ -1,12 +1,13 @@
 cask "dotnet-sdk-preview" do
-  arch = Hardware::CPU.intel? ? "x64" : "arm64"
+  arch arm: "arm64", intel: "x64"
 
-  if Hardware::CPU.intel?
-    version "7.0.100-preview.1.22110.4,d6b45e3f-1395-441d-a5ec-06b0fa380de6,5486b8caad6778dce9f2d292aa3fd3e1"
-    sha256 "3e452f80e5e8d37f8eddc146a41f5b8900d9c05c6bf2a13394feab8a1a0a2e98"
-  else
-    version "7.0.100-preview.1.22110.4,8a5292b1-3f04-4766-8551-690c87688734,3928534aafadd1b556a1526d45d0dc8c"
-    sha256 "e7dc99973176ae18f5e0613aba0df3a8a51ccf54dc474fb1862311f65ac75d7e"
+  on_intel do
+    version "7.0.100,11810c49-a615-40ec-b869-2eb2eae30f7b,4b0b7700fa0e8307b5f99c1d372d95bb"
+    sha256 "3311f8b5bf78cd8cbf2350a4385708ce3ac111333760835bb93dab98c5867b00"
+  end
+  on_arm do
+    version "7.0.100,4f0bd204-39be-492a-be5e-4bda7f569963,b245763ad54175dd87e260e394ec9c0d"
+    sha256 "9ea8807a2bd7db29bbad7a3ba235bffe0999bea4fd2b4deec9e71da8da309d17"
   end
 
   url "https://download.visualstudio.microsoft.com/download/pr/#{version.csv[1]}/#{version.csv[2]}/dotnet-sdk-#{version.csv[0]}-osx-#{arch}.pkg"
@@ -35,9 +36,9 @@ cask "dotnet-sdk-preview" do
   binary "/usr/local/share/dotnet/dotnet"
 
   uninstall pkgutil: [
-    "com.microsoft.dotnet.*",
-    "com.microsoft.netstandard.pack.targeting.*",
-  ],
+              "com.microsoft.dotnet.*",
+              "com.microsoft.netstandard.pack.targeting.*",
+            ],
             delete:  [
               "/etc/paths.d/dotnet",
               "/etc/paths.d/dotnet-cli-tools",

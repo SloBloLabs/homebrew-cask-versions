@@ -1,13 +1,9 @@
 cask "temurin17" do
-  arch = Hardware::CPU.intel? ? "x64" : "aarch64"
+  arch arm: "aarch64", intel: "x64"
 
-  version "17.0.2,8"
-
-  if Hardware::CPU.intel?
-    sha256 "b82d3ba3ff4c453bd954979a20e67754478294da8650e3b9e50f6d1a7cf5c628"
-  else
-    sha256 "0904c11eb5f7b53aac53e6279992ee2a900c9517b26659dee3704b2d11c149cd"
-  end
+  version "17.0.5,8"
+  sha256 arm:   "a9bd39aa2633f5cfb1af880ea1c8bbe63bba1514c6206e840eea9bbd0181845f",
+         intel: "f15eb12eebab85d46503438f7e9cdb040f28dad4d50fb21826bf9c51c4b7c283"
 
   url "https://github.com/adoptium/temurin#{version.major}-binaries/releases/download/jdk-#{version.csv.first}%2B#{version.csv.second}/OpenJDK#{version.major}U-jdk_#{arch}_mac_hotspot_#{version.csv.first}_#{version.csv.second.major}.pkg",
       verified: "github.com/adoptium/"
@@ -16,14 +12,15 @@ cask "temurin17" do
   homepage "https://adoptium.net/"
 
   livecheck do
-    url "https://api.adoptium.net/v3/info/release_versions?release_type=ga&architecture=#{arch}&image_type=jdk&jvm_impl=hotspot&os=mac&page=0&page_size=1&project=jdk&sort_method=DEFAULT&sort_order=DESC&vendor=eclipse"
-    strategy :page_match do |page|
-      JSON.parse(page)["versions"].map do |version|
-        match = version["openjdk_version"].match(/^(\d+(?:\.\d+)*)\+(\d+(?:\.\d+)*)$/i)
+    url "https://api.adoptium.net/v3/assets/feature_releases/#{version.major}/ga?architecture=#{arch}&image_type=jdk&jvm_impl=hotspot&os=mac&page=0&page_size=1&project=jdk&sort_method=DEFAULT&sort_order=DESC&vendor=eclipse"
+    regex(/^jdk-(\d+(?:\.\d+)+)\+(\d+(?:\.\d+)*)$/i)
+    strategy :page_match do |page, regex|
+      JSON.parse(page).map do |release|
+        match = release["release_name"]&.match(regex)
         next if match.blank?
 
         "#{match[1]},#{match[2]}"
-      end.compact
+      end
     end
   end
 

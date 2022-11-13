@@ -6,6 +6,7 @@ cask "sequel-pro-nightly" do
     page[%r{https://sequelpro.com/builds/Sequel-Pro-Build-\w+.zip}]
   end
   name "Sequel Pro"
+  desc "MySQL/MariaDB database management platform"
   homepage "https://sequelpro.com/test-builds"
 
   app "Sequel Pro.app"

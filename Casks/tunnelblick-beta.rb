@@ -1,6 +1,6 @@
 cask "tunnelblick-beta" do
-  version "3.8.8beta03,5790"
-  sha256 "1288e770f23fe098d73225a1f4ddfca6d3b2b6384ac8bcf7be30351799870eb2"
+  version "3.8.8beta04,5800"
+  sha256 "723aaf18cfb471626abf7d4bf4c0cff0b2a1a65f90ffd1c07d2220a693791a9b"
 
   url "https://github.com/Tunnelblick/Tunnelblick/releases/download/v#{version.csv.first}/Tunnelblick_#{version.csv.first}_build_#{version.csv.second}.dmg",
       verified: "github.com/Tunnelblick/Tunnelblick/"
@@ -10,12 +10,9 @@ cask "tunnelblick-beta" do
 
   livecheck do
     url "https://github.com/Tunnelblick/Tunnelblick/releases"
-    regex(%r{href=.*?/Tunnelblick_(\d+(?:\.\d+)*beta(?:\d+))_build_(\d+)\.dmg}i)
+    regex(/Tunnelblick\s+?(\d+(?:\.\d+)*beta(?:\d+)[a-z]?)\s+?\(build\s+?(\d+)/i)
     strategy :page_match do |page, regex|
-      match = page.match(regex)
-      next if match.blank?
-
-      "#{match[1]},#{match[2]}"
+      page.scan(regex).map { |match| "#{match[0]},#{match[1]}" }
     end
   end
 
@@ -28,9 +25,9 @@ cask "tunnelblick-beta" do
   end
 
   uninstall launchctl: [
-    "net.tunnelblick.tunnelblick.LaunchAtLogin",
-    "net.tunnelblick.tunnelblick.tunnelblickd",
-  ],
+              "net.tunnelblick.tunnelblick.LaunchAtLogin",
+              "net.tunnelblick.tunnelblick.tunnelblickd",
+            ],
             quit:      "net.tunnelblick.tunnelblick"
 
   zap trash: [

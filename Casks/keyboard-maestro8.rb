@@ -5,9 +5,8 @@ cask "keyboard-maestro8" do
   url "https://files.stairways.com/keyboardmaestro-#{version.no_dots}.zip",
       verified: "files.stairways.com/"
   name "Keyboard Maestro"
+  desc "Automation software"
   homepage "https://www.keyboardmaestro.com/main/"
-
-  depends_on macos: ">= :yosemite"
 
   app "Keyboard Maestro.app"
 
@@ -22,4 +21,8 @@ cask "keyboard-maestro8" do
     "~/Library/Preferences/com.stairways.keyboardmaestro.plist",
     "~/Library/Saved Application State/com.stairways.keyboardmaestro.editor.savedState",
   ]
+
+  caveats do
+    discontinued
+  end
 end

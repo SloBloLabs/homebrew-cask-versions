@@ -1,8 +1,11 @@
 cask "appcode-eap" do
-  version "2022.1,221.4994.44"
-  sha256 "1e6e4f9cc12be96b3939bb87e7348a6b033e6030bb91a2b7eecc23775562c164"
+  arch arm: "-aarch64"
 
-  url "https://download.jetbrains.com/objc/AppCode-#{version.csv.second}.dmg"
+  version "2022.3,223.7401.11"
+  sha256 arm:   "4822c32f5116d4fd9f946eac0c3385fb6671a905c8c333749c940c54b9ec8487",
+         intel: "229400c9447b0ea39e337c28f0d2e21034dd6817fb0fa0fdd2408efe58f77d83"
+
+  url "https://download.jetbrains.com/objc/AppCode-#{version.csv.second}#{arch}.dmg"
   name "AppCode EAP"
   desc "IDE for Swift, Objective-C, C, and C++ development"
   homepage "https://www.jetbrains.com/objc/nextversion/"

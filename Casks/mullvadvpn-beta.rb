@@ -1,6 +1,6 @@
 cask "mullvadvpn-beta" do
-  version "2022.1-beta2"
-  sha256 "01306c363514f77f439631f6403f3fbaf831761ddcaab53eae7c0ed53dd3ba83"
+  version "2022.5-beta2"
+  sha256 "78b2571f0ac4b5d8bc99086172225009924dbb7619658707416622f095eb58e9"
 
   url "https://github.com/mullvad/mullvadvpn-app/releases/download/#{version}/MullvadVPN-#{version}.pkg",
       verified: "github.com/mullvad/mullvadvpn-app/"
@@ -10,8 +10,8 @@ cask "mullvadvpn-beta" do
 
   livecheck do
     url "https://github.com/mullvad/mullvadvpn-app/releases"
+    regex(%r{href=["']?[^"' >]*?/tag/v?(\d+(?:\.\d+)+[._-]beta\d*)["' >]}i)
     strategy :page_match
-    regex(/MullvadVPN-(\d+(?:\.\d+)*.+-beta\d+).pkg/i)
   end
 
   conflicts_with cask: "mullvadvpn"

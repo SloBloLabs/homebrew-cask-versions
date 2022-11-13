@@ -1,14 +1,11 @@
 cask "microsoft-edge-dev" do
-  folder = Hardware::CPU.intel? ? "C1297A47-86C4-4C1F-97FA-950631F94777" : "03adf619-38c6-4249-95ff-4a01c0ffc962"
-  linkid = Hardware::CPU.intel? ? "2069340" : "2099619"
+  folder = on_arch_conditional arm:   "03adf619-38c6-4249-95ff-4a01c0ffc962",
+                               intel: "C1297A47-86C4-4C1F-97FA-950631F94777"
+  linkid = on_arch_conditional arm: "2099619", intel: "2069340"
 
-  version "101.0.1193.0"
-
-  if Hardware::CPU.intel?
-    sha256 "f40f15e7518782a9294b2f07ee796a3fe93bd8395eb8a0c19bd7336f2e558404"
-  else
-    sha256 "866abc044d8ba6f4f3e7ba839507421e57e6abfa8968f56ffc80a0a1402b1de2"
-  end
+  version "109.0.1481.0"
+  sha256 arm:   "51bc8d45cf719a8a7bfeccf0cb4e9144e81f4db692a98b4200772ebbb42ae8ee",
+         intel: "615b93ff8750127e46e3a7d2bf2905c0e4e130d20fe87bf0155c1fb74e5cf425"
 
   url "https://officecdn-microsoft-com.akamaized.net/pr/#{folder}/MacAutoupdate/MicrosoftEdgeDev-#{version}.pkg",
       verified: "officecdn-microsoft-com.akamaized.net/"
@@ -22,7 +19,6 @@ cask "microsoft-edge-dev" do
   end
 
   auto_updates true
-  depends_on cask: "microsoft-auto-update"
 
   pkg "MicrosoftEdgeDev-#{version}.pkg",
       choices: [
@@ -36,10 +32,10 @@ cask "microsoft-edge-dev" do
   uninstall pkgutil: "com.microsoft.edgemac.Dev"
 
   zap trash: [
-    "~/Library/Application Support/Microsoft Edge Dev",
-    "~/Library/Caches/Microsoft Edge Dev",
-    "~/Library/Preferences/com.microsoft.edgemac.Dev.plist",
-    "~/Library/Saved Application State/com.microsoft.edgemac.Dev.savedState",
-  ],
+        "~/Library/Application Support/Microsoft Edge Dev",
+        "~/Library/Caches/Microsoft Edge Dev",
+        "~/Library/Preferences/com.microsoft.edgemac.Dev.plist",
+        "~/Library/Saved Application State/com.microsoft.edgemac.Dev.savedState",
+      ],
       rmdir: "/Library/Application Support/Microsoft"
 end

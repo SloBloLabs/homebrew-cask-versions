@@ -1,68 +1,68 @@
 cask "firefox-esr" do
-  version "91.7.1"
+  version "102.4.0"
 
   language "cs" do
-    sha256 "3eaf392b3178444f272eeb159cc052a7ab09c3751a3e4182a0a2802ac9296f01"
+    sha256 "c94b69f9bcea5d79af75297c8997196e747801430928a1439748794644fe0068"
     "cs"
   end
   language "de" do
-    sha256 "2d9f5cf216c60e961f2755c5188902859a563e62e9ee78d1eafe835523a335d7"
+    sha256 "5fa52f36110a77cd015e8b1c5a620c10fa3ed56da0f5d8f0a88052da70b55dcf"
     "de"
   end
   language "en-CA" do
-    sha256 "3bcaf31033c8d9d85bc09e296a3a1bbd0829dc3c4d21bbb23a5203366d6a25d2"
+    sha256 "6c32ebef1307893dd2d2980d99efd9b48e28a35f5d8f94d6a76373ee40989137"
     "en-CA"
   end
   language "en-GB" do
-    sha256 "186b8c2052f1444b5d714a7317428dab73cb82e5c0562d2065b26b8b9415a2b4"
+    sha256 "6e58c0ba190d7f7a30d3ff2309eb2624ff7867dd8b378d763c347f95caca8942"
     "en-GB"
   end
   language "en", default: true do
-    sha256 "c617955614a33b56fcde98f62d6fee4fa4f2f4f8e6302a8e8dd2432f4af197a4"
+    sha256 "47ba4ddfc3d709a6de078839b676fd7cdbb673e41361cb7570925b68e9d9583c"
     "en-US"
   end
   language "fr" do
-    sha256 "cbcebad9f756ea1b94e62a88de9a161b02fe8f534d17fc9fc7b6a6e84be31b8d"
+    sha256 "411d238d04e350bd7c83bba34065b02cd7787e7621f5bf34b9e1fcc9633f9af3"
     "fr"
   end
   language "gl" do
-    sha256 "bab7e070f3f7f0df6b580bb8ef7e4f4fd4a1fa75c51c73ef8727504c4cffa4b4"
+    sha256 "9aad3952707eef45d2ffa5e3c95358cc01aa846c2978649c113e659cf515c8df"
     "gl"
   end
   language "it" do
-    sha256 "b580fe8009d2092699ede9962ff57062d3e4343baaf317c53021047be8ef38e0"
+    sha256 "b5609231b6057ad711a127e366a0a2b96c1f2feebd31d108b8d097cbc73656d2"
     "it"
   end
   language "ja" do
-    sha256 "0e51a9cd14736aa631d07b177ad2b4be1977f6e708f08dbad9071d5825441d82"
+    sha256 "8e865e6c12b6228ef721409456a7951adf83fa04bb35eb79b509de7706ed25ce"
     "ja-JP-mac"
   end
   language "nl" do
-    sha256 "f7df53c5ad0de208c3d6ce5ec5c0d42643d54a3e49815fd4cf311cd34835a1d7"
+    sha256 "16fc9311fd83923147a7cb9f841bf7fa865d58420a6bdddac8e6c82b86b07564"
     "nl"
   end
   language "pl" do
-    sha256 "15e34d24145ccb130882e9bd3bc107598101b3273795bacf84d2bf066527dc16"
+    sha256 "40a7d3bf3fc26997ab8f6f15e6cfd16902f0e52e4744ef50358e3b7ac4419ae2"
     "pl"
   end
   language "pt" do
-    sha256 "3a623252a8dcabc196307ba5eaada1e3e8d037736244964a4e52cfb22446607a"
+    sha256 "da36f8021908056127b6183910c3cb6ffd09d0739b4bf016a995ce7a088f5c0d"
     "pt-PT"
   end
   language "ru" do
-    sha256 "d96e8fe984c7d7805a8210a1240a5669a0ee244bf118bedf0423ce5322d882a8"
+    sha256 "82d8e41d37ac3db736cd71a4651f968e60ddcd51f54ec78e6138b6d694d9fcb0"
     "ru"
   end
   language "uk" do
-    sha256 "20c88cc435299accb58e10738dc293514b3db3793c229d569d9e8791f650bdfe"
+    sha256 "d74122b8f7568fd758f6e97f87d15e0021d1a29ce4371cd6f343dbd911d46c90"
     "uk"
   end
   language "zh-TW" do
-    sha256 "7bfae1450b32ac6218ae5f281690da1d779f9b251246398c1260c765e2df75b0"
+    sha256 "5c3c070db906d510439a503c5664570a66a895c2613cb0cbde556032bbcaf689"
     "zh-TW"
   end
   language "zh" do
-    sha256 "d48df15a414e674aec1b329ab8021caf337d8debe4728e4cd95b144d4d0e4650"
+    sha256 "89333bb116b78f95134ce1feac945f33eef21cefe12a23aee98a8cf0adca11f8"
     "zh-CN"
   end
 
@@ -74,7 +74,7 @@ cask "firefox-esr" do
   homepage "https://www.mozilla.org/en-US/firefox/all/#product-desktop-esr"
 
   livecheck do
-    url "https://download.mozilla.org/?product=firefox-esr-next-latest-ssl&os=osx&lang=en-US"
+    url "https://download.mozilla.org/?product=firefox-esr-latest-ssl&os=osx&lang=en-US"
     strategy :header_match
   end
 
@@ -90,18 +90,18 @@ cask "firefox-esr" do
             delete: "/Library/Logs/DiagnosticReports/firefox_*"
 
   zap trash: [
-    "~/Library/Application Support/com.apple.sharedfilelist/com.apple.LSSharedFileList.ApplicationRecentDocuments/org.mozilla.firefox.sfl*",
-    "~/Library/Application Support/CrashReporter/firefox_*",
-    "~/Library/Application Support/Firefox",
-    "~/Library/Caches/Firefox",
-    "~/Library/Caches/Mozilla/updates/Applications/Firefox",
-    "~/Library/Caches/org.mozilla.crashreporter",
-    "~/Library/Caches/org.mozilla.firefox",
-    "~/Library/Preferences/org.mozilla.crashreporter.plist",
-    "~/Library/Preferences/org.mozilla.firefox.plist",
-    "~/Library/Saved Application State/org.mozilla.firefox.savedState",
-    "~/Library/WebKit/org.mozilla.firefox",
-  ],
+        "~/Library/Application Support/com.apple.sharedfilelist/com.apple.LSSharedFileList.ApplicationRecentDocuments/org.mozilla.firefox.sfl*",
+        "~/Library/Application Support/CrashReporter/firefox_*",
+        "~/Library/Application Support/Firefox",
+        "~/Library/Caches/Firefox",
+        "~/Library/Caches/Mozilla/updates/Applications/Firefox",
+        "~/Library/Caches/org.mozilla.crashreporter",
+        "~/Library/Caches/org.mozilla.firefox",
+        "~/Library/Preferences/org.mozilla.crashreporter.plist",
+        "~/Library/Preferences/org.mozilla.firefox.plist",
+        "~/Library/Saved Application State/org.mozilla.firefox.savedState",
+        "~/Library/WebKit/org.mozilla.firefox",
+      ],
       rmdir: [
         "~/Library/Application Support/Mozilla", #  May also contain non-Firefox data
         "~/Library/Caches/Mozilla/updates/Applications",

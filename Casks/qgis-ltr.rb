@@ -1,6 +1,6 @@
 cask "qgis-ltr" do
-  version "3.22.5,20220318_192712"
-  sha256 "a88f60902dba0a7391b5e54acd8881650f687c669abf1aaafc09ffa11842f9ba"
+  version "3.22.12,20221021_155047"
+  sha256 "d5a5b18f8755805d7e3886d6bcba4d04ec3fdfe40215a77dd4a184c73de87ac1"
 
   url "https://qgis.org/downloads/macos/ltr/qgis_ltr_final-#{version.csv.first.dots_to_underscores}_#{version.csv.second}.dmg"
   name "QGIS LTR"
@@ -9,13 +9,17 @@ cask "qgis-ltr" do
 
   livecheck do
     url "https://qgis.org/downloads/macos/qgis-macos-ltr.sha256sum"
-    strategy :page_match do |page|
-      match = page.match(/qgis_ltr_final[._-]v?(\d+(?:_\d+)+)[._-](\d+_\d+)\.dmg/i)
-      next if match.blank?
-
-      "#{match[1].tr("_", ".")},#{match[2]}"
+    regex(/qgis_ltr_final[._-]v?(\d+(?:_\d+)+)[._-](\d+_\d+)\.dmg/i)
+    strategy :page_match do |page, regex|
+      page.scan(regex).map { |match| "#{match[0].tr("_", ".")},#{match[1]}" }
     end
   end
 
   app "QGIS-LTR.app"
+
+  zap trash: [
+    "~/Library/Application Support/QGIS",
+    "~/Library/Caches/QGIS",
+    "~/Library/Saved Application State/org.qgis.qgis*.savedState",
+  ]
 end

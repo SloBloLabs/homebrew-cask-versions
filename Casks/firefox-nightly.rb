@@ -78,7 +78,7 @@ cask "firefox-nightly" do
     "zh-CN"
   end
 
-  url "https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central#{language == "en-US" ? "" : "-l10n"}/" do |page|
+  url "https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central#{(language == "en-US") ? "" : "-l10n"}/" do |page|
     file_path = page.scan(%r{<td><a href="(/pub/firefox/nightly/[^"]+\.mac\.dmg)">}).flatten.grep(/\.#{language}\.mac\.dmg/).max
     [URI.join(page.url, file_path), { verified: "mozilla.net" }]
   end
@@ -91,17 +91,17 @@ cask "firefox-nightly" do
   app "Firefox Nightly.app"
 
   zap trash: [
-    "/Library/Logs/DiagnosticReports/firefox_*",
-    "~/Library/Application Support/Firefox",
-    "~/Library/Application Support/com.apple.sharedfilelist/com.apple.LSSharedFileList.ApplicationRecentDocuments/org.mozilla.firefox.sfl*",
-    "~/Library/Application Support/CrashReporter/firefox_*",
-    "~/Library/Caches/Firefox",
-    "~/Library/Caches/Mozilla/updates/Applications/Firefox",
-    "~/Library/Caches/org.mozilla.firefox",
-    "~/Library/Preferences/org.mozilla.firefox.plist",
-    "~/Library/Saved Application State/org.mozilla.firefox.savedState",
-    "~/Library/WebKit/org.mozilla.firefox",
-  ],
+        "/Library/Logs/DiagnosticReports/firefox_*",
+        "~/Library/Application Support/Firefox",
+        "~/Library/Application Support/com.apple.sharedfilelist/com.apple.LSSharedFileList.ApplicationRecentDocuments/org.mozilla.firefox.sfl*",
+        "~/Library/Application Support/CrashReporter/firefox_*",
+        "~/Library/Caches/Firefox",
+        "~/Library/Caches/Mozilla/updates/Applications/Firefox",
+        "~/Library/Caches/org.mozilla.firefox",
+        "~/Library/Preferences/org.mozilla.firefox.plist",
+        "~/Library/Saved Application State/org.mozilla.firefox.savedState",
+        "~/Library/WebKit/org.mozilla.firefox",
+      ],
       rmdir: [
         "~/Library/Application Support/Mozilla", #  May also contain non-Firefox data
         "~/Library/Caches/Mozilla/updates/Applications",
